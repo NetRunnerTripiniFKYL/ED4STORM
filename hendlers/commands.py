@@ -3,15 +3,14 @@ from aiogram import Router, F
 from aiogram.types import Message
 from aiogram.filters.command import Command
 from config import CODE as ACCESS_CODE
-from defs import load_authorized_users as load_users
-from defs import save_authorized_users as save_users
+import defs # Импортируем функции для работы с данными пользователей
 import keyboards.reply_kb as rkb
 
 # Создаем роутер для обработки команд
 router = Router()
 
 # Загружаем список авторизованных пользователей
-auth_users = load_users()
+auth_users = defs.load_authorized_users()
 
 # Обработчик команды /start
 @router.message(Command("start"))
@@ -30,7 +29,8 @@ async def handle_message(message: Message):
         await message.answer("Вы уже авторизованы! Ваше сообщение обработано.", reply_markup=rkb.reply_start)
     elif message.text == ACCESS_CODE:
         auth_users.add(user_id)
-        save_users(auth_users)  # Сохраняем после успешной авторизации
+        defs.save_authorized_users(auth_users)  # Сохраняем после успешной авторизации
         await message.answer("Код верен! Теперь вы можете использовать бота.", reply_markup=rkb.reply_start)
     else:
         await message.answer("Неверный код. Попробуйте снова.")
+
