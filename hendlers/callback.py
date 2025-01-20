@@ -113,9 +113,9 @@ async def show_progress(message: Message):
     
     progress_message = "Ваш прогресс:\n"
     for module_id, lessons in progress.items():
-        progress_message += f"Модуль {modules[module_id]["name"]}:\n"
+        progress_message += f"Модуль {modules[module_id]['name']}:\n"
         for lesson_index, quizzes in lessons.items():
-            progress_message += f"  Урок {modules[module_id]["lessons"][int(lesson_index)]["name"]}:\n"
+            progress_message += f"  Урок {modules[module_id]['lessons'][int(lesson_index)]['name']}:\n"
             for quiz_index, is_correct in quizzes.items():
                 status = "✅" if is_correct else "❌"
                 progress_message += f"    Тест {quiz_index}: {status}\n"
